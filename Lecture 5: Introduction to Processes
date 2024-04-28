@@ -1,0 +1,71 @@
+Q: What is a process?
+A: A program in execution
+
+Context switch:
+
+When there are multiple processes available to run
+
+1. OS selects a process 
+
+2. Converts it into a process 
+
+3. Gives it to CPU
+
+4. After some time, the OS swaps out this process from CPU 
+
+5. Swaps in another process/program to CPU
+
+The process of OS consistently swapping processes in and out is called context switching.
+
+The concept of one actual CPU’s time being shared by multiple processes is called “time sharing”. This gives the illusion that each process has their own dedicated CPU.
+
+Advantage of context switch: Interactivity
+
+Disadvantage of context switch: CPU is unable to execute when context switch is taking place
+
+
+
+
+
+In the above diagram, 3 tasks - A,B and C are executed - without switching ( top ) and with switching ( bottom ). The gray bands represent time wasted due to context switching.
+
+Process Control Block
+
+What all comes under PCB:
+
+Memory Layout, Registers and Metadata
+
+
+Memory Layout 
+
+Stack grows downwards, Heap grows upwards.If stack and heap meet each other, then we get the error -> MLE( Memory Limit Exceeded )/ Segmentation fault
+
+
+
+
+Registers 
+a.Program Counter
+
+Stores the current statement number that we are executing. When a program is swapped out and then swapped in later, PC register helps in identifying where should the execution resume from.
+
+b. Stack Pointer 
+
+Lets say main() calls f1(), and f1() calls f2(). Each of the function calls: main, f1 and f2 will have their own stack pointers. Stack pointers store the “current activation record”, which means the current line being executed in that particular function. If we just look at PC register, it will just show where were we in f2. To know from where was it called, we need to look up the SP register. SP register stores SP pointers which are available for every function.
+
+Lets say that main calls f1 at line #4, then the stack pointer of main() will store line #4 in itself and that stack pointer will be stored in the stack register.
+
+c.Frame pointer
+
+Frame pointer simply stores the beginning of the current function. Why is it needed?
+
+Say f1() called f2(). f2() is now at top of function stack and it has got memory allocated. When f2() is over, and f1() resumes, we need to delete the memory associated with f2() and we can do that by erasing every memory allocated above the frame pointer of f1(). Every function has its own frame pointer.
+
+3.Metadata
+Stores:
+
+ID of current process
+Priority
+I/O status
+Status of the process
+Limits ( of memory, time etc )
+ID of parent process 
