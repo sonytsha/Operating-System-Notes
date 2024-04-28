@@ -1,0 +1,50 @@
+Suppose there is a process P1 that has a huge memory requirement, and requires lots of pages.
+
+RAM - having finite memory - will have limited frames only. RAM will need to serve other processes as well.
+
+So, all the pages of the process may not be accommodated in the RAM at a given time.
+
+The remaining pages of the process are stored in HDD.
+
+Special memory is reserved in HDD for storing pages: swap space.
+
+Processes are able to identify if a particular page is in RAM memory or in Swap Space by using the present bit.
+
+Present bit = 1 means the page is in RAM
+
+Present bit = 0 means the page is in swap space
+
+Page fault:
+
+If we try to access some particular page which is not there in the RAM, then it leads to page fault.
+
+How page fault is handled:
+If page fault happens, then the page fault handler runs.
+
+Page fault handler will find the swapped space address of the page, which is stored in the page table, and will reach that address in HDD.
+It will then shift the page from swap space to RAM. 
+It will then make the present bit 1 and update the frame number of the page.
+
+Page replacement policy
+
+If the RAM is already full and a page needs to be shifted  from SWAP space to RAM, then we need to put one of the existing pages in RAM into swap space. So for this, we require a page replacement policy.
+
+Page replacement policy: Policy required to remove which page so as to accommodate the incoming page. We will read about them in the next section.
+
+
+Time analysis corresponding to page fault:
+
+
+p=> probability of page fault
+
+Tf=> time to process page fault
+
+Tn=> Normal time to process
+
+Avg Time of accessing an address ( T_avg ) = p*Tf + (1-p)* Tn
+
+Suppose Tn = 200 ns, Tf = 8 ms = 8*10^6 ns.
+
+If p = 0.001,
+
+T_avg = 8.2 microseconds, which is not an acceptable time. We need to ensure that P is very small, 1/ 400,000, such that T avg is around 200 ns.
