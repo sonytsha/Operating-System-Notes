@@ -1,0 +1,29 @@
+Idea behind the algorithm:
+
+A common problem in computer science is:
+
+Fairness vs efficiency
+
+Fairness - Response time is a metric of fairness
+
+Efficiency - Turn around time is a metric of efficiency
+
+Response time: The average time gap between the arrival of the process and the 1st instance when it is given CPU time.
+
+There is a trade off between response time and turn around time. We have to balance both of them. Absence of efficiency and being completely fair would mean rotating the CPU for each process. Absence of fairness and being completely efficient would lead to starvation.
+
+Round Robin Algorithm focuses on fairness but also tries to make sure that its somewhat efficient.
+
+Algorithm: Every process gets ‘t’ time of CPU and then next process gets CPU and this keeps happening in circle. This time is called t_quantum/slice.
+
+Implementation: Circular queue/Circular linked list is used to implement round robin algorithm.
+
+t_quantum - If it is very high ( say 10 s ), then it ceases to be round robin. It becomes more of a first come first serve because T_quantum is very high.
+
+If it is very low, then much time will be spent in context switching only. It should be something of a middle value and experimentally that time has been found to be 10-100 ms.
+
+Performance analysis:
+
+If there are n processes, then in atleast t_quantum x n time, every process will have firstly interacted with CPU. Response time is quite good.
+
+For turnaround time, the round-robin algorithm is not that good. The context switches and the fact that a process will probably be finished after t_quantum x n time makes it less efficient.We will try to find a more efficient algo and this time also give up our last assumption (i.e. we would not know the run time beforehand)
