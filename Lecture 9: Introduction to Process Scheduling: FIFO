@@ -1,0 +1,32 @@
+We start with these 4 assumptions to simplify the process scheduling algorithms:
+
+All processes take finite amount of time
+Once started (running), a process cannot be paused. [ No interrupt ]
+Runtime of each process is known beforehand.
+No process will be using and waiting for I/O (input/output).
+Turnaround time: The time gap between the arrival of a process and its finishing time.
+
+Avg turnaround time ( T_avg ): The average of turnaround times of  all the processes.
+
+First In/First Out (FIFO) scheduling algorithm:
+
+
+Say at t=0 ms, two processes arrive with runtime 10 ms.
+
+P1 runs from 0 to 10 ms.
+
+P2 runs from 10 ms to 20 ms.
+
+Turn around times for 
+
+P1: 10-0  = 10 ms
+
+P2: 20-0  = 20 ms
+
+Avg turnaround time = ( 10 ms  + 20 ms )/ 2 = 15 ms
+
+Avg turnaround time would have been the same had we taken P2 first to run followed by P1.
+
+In case the processes have different run times, FIFO does NOT minimize the average turnaround time.
+
+It is the reason why FIFO is not a good scheduling algorithm.
