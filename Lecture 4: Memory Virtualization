@@ -1,0 +1,9 @@
+Execution of a program ( machine level code ) involves FDE - Fetch, Decode and Execution.
+
+While fetching, the code is brought from the memory to CPU, for decoding and subsequent execution. If the CPU tries to fetch the code from hard disk, fetching will be very slow. Therefore, the OS first brings the code to RAM before it starts executing the program.
+
+While bringing the code into RAM, can it happen that the code’s memory is more than the RAM’s capacity?
+
+Yes. Imagine running a high graphic game ( 300 GB ). RAM (typically 4-16 GB) is very less than the game’s memory. In this case, the OS tries to manage the 16 GB RAM by moving the segment of code that is going to be executed, and removes the code that has been executed from the RAM. This is the idea behind virtual memorization - the game’s process is able to access all the 300 GB of memory, whenever required - and the OS facilitates this by clever swapping of memory.
+
+This gives the illusion to the process that a lot of RAM memory is available than there actually is.
