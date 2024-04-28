@@ -1,0 +1,38 @@
+Memory Hierarchy:
+
+HDD/Hard Disk Drive
+SSD/Solid state drive
+RAM/Main Memory/Random Access Memory
+Cache
+Registers
+
+
+
+
+Accessing registers is fastest. Accessing HDD is slowest.
+
+Cost of registers is highest, Cost of HDDs are lowest.
+
+Volatile vs Non-volatile memory
+
+Even if the machine is switched off, whatever is in non-volatile memory, is retained.
+
+e.g. HDD, SSD - Non-volatile
+
+RAM, Cache, Registers - Volatile
+
+Enabling faster access
+
+For storing important stuff ( e,g, the processes that are running right now ), we transfer them to main memory ( RAM ), so that CPU can access them faster. 
+
+On top of it, some part of that currently running process which are used a lot frequently are stored in cache.
+
+On top of it, some variables which are right now in current instructions are put in registers.
+
+
+Using RAM efficiently
+
+
+ It is not efficient to give complete RAM to the current running process and do it for each current running process. As during each context switch, the memory of the outgoing process has to be copied back to HDD, and the memory of the incoming process will need to be copied from HDD to RAM, which will consume a lot of time, as reads/writes in HDD is very slow.
+
+The better idea is to share the RAM among processes. While sharing RAM, we do not want process P1 to access the memory region of process  P2 and vice versa.
