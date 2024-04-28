@@ -1,0 +1,8 @@
+How many programs can CPU run at a time?
+
+In a single core CPU, the CPU can execute only one program at a particular moment. But the OS can quickly switch between multiple programs: it can preempt an executing program and make another program execute. This gives an appearance to the user that all the programs are running simultaneously, but under the hood, it’s the OS which is switching quickly between programs.
+
+
+
+
+In the above diagram, 3 tasks - A,B and C are executed - without switching ( top ) and with switching ( bottom )
