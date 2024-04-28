@@ -1,0 +1,54 @@
+Fragments: Parts of RAM that are empty post segmentation ( which are of no utility )
+
+Types of fragmentation:
+
+External fragmentation:
+
+
+
+Suppose P2 wants allocation of ‘m’ size memory but a<m, b<m, c<m, d<m, e<m even though a+b+c+d+e > m. This is called external fragmentation
+
+2. Internal fragmentation
+
+The process itself asks for some extra memory which is wasted. Suppose P1 needs 2.01 MB, but it asks for 2.10 MB. The remaining 0.09 MB will be unutilized , but will still be unavailable to any other process. This is called internal fragmentation.
+
+Internal fragmentation is not as big an issue because the extra memory that processes ask for is negligible.
+
+Techniques for preventing external fragmentation:
+
+Compaction - After some time t, all  processes are compacted to the top part of RAM, a procedure known as shifting up.
+
+Left: Before compaction
+Right: After compaction
+ 
+
+ Limitation: Compaction wastes CPU time.
+
+2. Maintaining a separate RAM space for serving fixed size requests:
+Suppose based on the history of memory allocation - OS deduces that most processes ask for 2 MB of data space. Now, the OS will keep a separate section of 2MB chunks only. All the free portion in this section of RAM will be in multiple of 2 MBs. And since most processes ask for 2 MB, if there is any space available in that section, the space will be allocated to the process - since it is guaranteed that the space will be in multiples of 2 MB in that section. This will eliminate the fragmentation at least in that section of the RAM.
+
+
+
+
+Limitation: It’s not necessary that all new requests are consistent with history.
+
+3. Buddy allocation
+
+OS will only serve that space request such that space size is a power of 2.
+
+When there’s a memory request, the OS tries to break down the complete RAM into chunks (of power of 2) till it is able to find such a chunk that satisfies the request. When a process releases some memory, it is combined with the memory of the neighbor, if the neighbor is free.
+
+
+Illustration:
+
+Suppose P1 wanted 4 KB. The whole RAM ( of 25 KB ) is divided into chunks until 4 KB is available. Now suppose P2 wants 16 KB. It can’t get it from the first 16 KB chunk since it is not free. 4 KB of it being used by P1 so the second 16 KB chunk is allocated to P2.
+
+Now suppose P1 releases itself. The 4 KB chunk gets free and it combines with its free 4 KB neighbor chunk to form 8 KB chunk. This 8 KB chunk combines with its free 8 KB neighbor chunk to get to form 16 KB chunk. This 16 KB chunk can’t combine with its un-free 16 KB neighbor chunk which is being used by P2. The new tree would look like:
+
+
+
+
+Before P1 releases memory
+
+
+After P1 release memory.
