@@ -1,0 +1,24 @@
+What happens when we “run” a code?
+
+Compiler: Translates code to binary file/machine level code
+Fetch/Decode/Execute cycle starts
+a, Fetch: Fetch next instruction from the machine level code
+b. Decode: Interpret that line
+c. Execute: Execute the instruction
+In an interpreter based language, the two steps - compilation and fetch/decode/execution are intertwined - the initial code, is read line by line by the interpreter, and is converted into machine level code and executed.
+
+Resources required to run our code
+
+RAM ( Memory - where the program is stored )
+
+CPU ( For fetching, decoding and execution )
+
+Drives/HDD
+
+How OS helps in running a program
+
+Since these resources are to be shared among different processes, OS is required to allocate/manage these resources to facilitate the execution of code.
+
+System calls: Commands that OS provides to the requesting process for getting access to the resources.
+
+Example: mmap()-> Finds a particular memory location and gives it to the process.
