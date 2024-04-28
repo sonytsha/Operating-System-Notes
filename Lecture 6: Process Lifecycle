@@ -1,0 +1,31 @@
+
+States of a process
+
+New State ( when OS identifies the process as something to be run )
+Ready State ( when its admitted by OS to run it ) 
+Running State ( when OS is executing it )
+Terminated State ( process completed or made to stop )
+
+Q. What is the difference b/w new state and ready state 2?
+
+A. In b/w new and ready state a few things happen:
+
+Address space [ load the code into RAM ]
+Allocate stack / heap space
+After these 2 are done, a process moves from new to ready state.
+
+Eager loading vs lazy loading
+
+Eager loading: Memory for the process is eagerly loaded. It is taken and loaded into the RAM.
+
+Lazy loading: You just reserve memory and say that this memory needs to be allocated to this process sometime later. This is just like reserving a table in restaurant for later.
+
+Process Queues
+
+Ready Queue: Contains admitted processes that are in line to run
+
+Job queue: Contains process in new state that are to be transformed into ready state. ( processes waiting in line to be allocated space/memory )
+
+Device Queue: Device’s (I/O) in queue: Each of the i/o devices have their own device queue. In the waiting state of each process, they have some input or output they need/give from/to the device and that input/output is stored in device queue.
+
+The PCB of each process can be found in either ready queue or job queue.
