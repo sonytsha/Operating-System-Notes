@@ -1,0 +1,13 @@
+Existing processes spawns new processes. So all the processes can be imagined to be a part of huge tree.
+
+
+The scheduler process is the root of the tree, its pid is 0. It is the first process to run on the system, and it spawns the init process with pid 1. Each process in the system is spawned by init, or spawned by a process which in turn was spawned by init, and so on.
+
+fork() system calls allows the parent process to spawn the child process such that the parent and child can run independently (  concurrently ).
+
+In some use cases, we want the parent to resume only after the child has completed. In those cases, we use the wait() system call within the parent.
+
+When a process P uses the fork() system call, it spawns a child process which is a clone of the process P, i.e., it has the exact same code, program counter etc. To make the child process execute a different program, exec() system call is invoked from within the child process, which allows the child to run the desired program instead of just being the copy of the parent process.
+
+
+A typical scenario, where the parent creates two processes using fork, and waits for the child to execute a program ( using exec ), and then the parent waits for the child to exit.
