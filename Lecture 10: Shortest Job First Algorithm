@@ -1,0 +1,58 @@
+Idea: Scheduling processes with smaller run time earlier than processes with large run time reduces the average turn around time.
+
+Algorithm: If there are multiple processes in ready queue at a given time, then the process with the shortest run time is scheduled first.
+
+Example:
+
+
+Average turnaround time with shortest job first algorithm:
+From t = 0 to t = 2, P1 will run.
+
+At t = 2, P2 and P3 are in queue.
+
+We run the shorter job, i.e. P3
+
+From t = 0 to t = 3, P3 will run.
+
+At t = 3, P2 and P4 are in queue.
+
+t = 2 to t = 3, P3 will run.
+
+At t = 3, P2 and P4 are in queue
+
+t = 3 to t = 5, P4 will run.
+
+At t = 5, P2 is the only process in queue.
+
+t = 5 to t =105 , P2 will run.
+
+Avg turnaround time = ( (2-0) + (3-2) + (5-3) + (105-1) )/4 = 109/4 = 27.25
+
+Average turnaround time with first come first serve algorithm:
+t = 0 to t = 2, P1 will run
+
+t = 2 to t =102, P2 will run
+
+t = 102 to t = 103, P3 will run
+
+t = 103 to t =105. P4 will run
+
+ 
+
+ Avg turnaround time = ( (2-0) + (102-1) + (103-2) + (105-3) )/4  = 309/4 = 77.25
+
+Shortcoming of shortest job first algorithm:
+
+If a process with large run time is already running in the CPU, then the smaller processes will have to wait till the large process finishes. This increases the average turn around time.
+
+
+Example:
+
+
+
+
+P1 arrives at t=0 and it is the shortest job of all so it will run initially till t=15 and P2 and P3 will have to wait till t =15.
+
+Solution for the above : Pre-emption
+
+A running job may be interrupted in the middle and some other job is given the CPU.
