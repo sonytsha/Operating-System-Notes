@@ -1,0 +1,53 @@
+Process’s address space is divided into fixed size chunks. These chunks are called pages. The RAM space is also into chunks of the same size, and those chunks are called frames. Each page will be treated individually and there will be one to one mapping between pages and frames. Each page of a process will be allocated some frame in RAM. This completely solves the problem of external fragmentation, although it leads to internal fragmentation.
+
+OS maintains a free frame list - list of frames that are free and from where frames will be given to processes.
+
+
+
+
+
+Page Table: 
+
+The page table is a table that maps the page number of a process to a corresponding frame number, i.e. it helps to determine where that page is actually stored in the RAM.
+Each process has its own page table.
+
+Address translation with paging:
+
+Suppose a process wants to access variable X. Consider that X is present in page p at an offset of d. Then, p and d uniquely determine the variable’s virtual address - the address understood by the process.
+
+
+To be able to locate the variable in the physical RAM, we need to find the corresponding frame f in the RAM, and within that frame, we need to move to the offset value, d. The frame number is found through the page table of the process.
+
+This gives us the physical address of the variable.
+
+
+
+
+From physical address we can access where X variable is in RAM:
+[ (f-1) * page size + d ]
+(f-1) * Page size is the starting address of the frame f.
+
+
+So now address translation becomes a 2 step process. We first access the frame number using page table and then with frame number and offset, we can get the position of X in RAM.
+
+Ensuring memory protection:
+Paging removes the concept of bases and bounds. Maintenance of the page table is sufficient to ensure memory protection.
+
+Impact of page size:
+
+If page size is too large, then it leads to internal fragmentation 
+
+If it is too small, a lot of pages for each process leads to increase in page table and waste of space related to storing page value
+
+Optimal value is selected by OS developer
+
+Where does this page table reside?
+
+In RAM. To know where a page table for a specific process resides in RAM, we have page table base register. The PTBR is a register that maintains the address of page table for the current process.
+
+
+
+
+Based on this, you can observe that every variable access requires 2 RAM accesses ( one to look up the frame number value from the page table and the other to read the value at the physical address ). This is double the number of accesses required in non-paging address translation.
+
+To avoid this, we introduce a “translation lookaside buffer” (TLB), which is a part of cache. It prevents the increase in time usage because of p-f mapping (page to frame ).
