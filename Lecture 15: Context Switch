@@ -1,0 +1,20 @@
+Say process P1 is running in CPU right now. And say P2, P3, P4, P5, … are in ready queue.
+
+If the scheduling is preemptive, it is possible that P1 could be removed and P2 starts running.
+
+PCB( Process control block ) of P1 removed from CPU.
+
+PCB of P2 posted into CPU.
+
+Also registers, cache etc are refreshed.
+
+When P1 is running, then that means OS ( which itself is a process ) is not running. So how will OS remove P1?
+
+Using co-operative way
+Wait for P1 to make a system call/software interrupt. OS takes control in interrupt mode and then scheduler is run by OS to check if some other process has to be moved or not.
+
+2. Using non-cooperative way
+
+H/w interrupt is used to have OS take back control. OS starts a timer of some t time at the beginning of execution of P1. As soon as the timer expires, the hardware sends H/w interrupt to CPU & OS takes the control back.
+
+Cooperative mode alone is not sufficient. If P1 runs into infinite loop and we do not have non-cooperative way, OS will never be able to take back control.
