@@ -1,0 +1,24 @@
+Ways a program gets terminated:
+
+Voluntary exit: Process is completed & the process itself calls the exits system command: exit()
+Involuntary exit: 
+a) System/OS takes decision to kill process because it’s trying to do
+
+something which it is not allowed to do ( like unauthorized access )
+
+b) Parent process kills the child process( for instance, if child process 
+
+exceeds the time limit )
+
+What happens after termination:
+
+Resources are freed
+Return exit code() to parent process: If exit code is 0, it indicates successful completion of child, else it indicates erroneous exit.
+Complications
+
+Orhan processes:
+Suppose the parent process P has spawned a child process C. Assume that P is not waiting for C’s completion, and terminates before C does. In such situations C is called an orphan process. An orphan process is inherited by the init process( pid=1). The init process either kills the orphan process or lets it run and waits for completion.
+
+2. Zombie processes:
+
+Suppose the parent process P has spawned a child process C. Suppose P is not waiting for C and C terminates. Since P is not waiting for C, the exit code of C won’t be read by P. The child will not be completely terminated because exit code() could not be returned ( Parent is not waiting to accept it. ). Such child processes which have completed but cannot be destroyed because their status has not been read by the parent are called zombie processes.
