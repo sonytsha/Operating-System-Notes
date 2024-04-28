@@ -1,0 +1,68 @@
+Scenarios in which processes need to communicate with each other:
+
+
+Producer-consumer problem
+One process is creating some data, and the other process is using that data ( data sharing )
+
+E.g. the process which is downloading the video needs to inform the process which will play the video after downloading finishes.
+
+2. To ensure parallelism
+
+Suppose process Z needs to happen after processes X and Y have happened.
+
+
+One way to do that would be to do them sequentially - Execute X, then Y, then Z.
+
+A faster way to do it will be to execute X and Y simultaneously. When they complete, they will inform and then process Z will begin.
+
+Ways to achieve Interprocess Communication:
+
+Shared memory
+Two processes can write on a shared memory to communicate with each other.
+
+P1 allocated some shared memory.
+
+P1 shares that memory with P2.
+
+P2 attaches that memory space to its space.
+
+Finally, read and write can happen through which the two processes can communicate.
+
+2. Message passing system ( Sending and receiving messages )
+
+P1 can send message which P2 will receive
+
+
+If only P1 can send and P2 can receive (or vice versa) its called asymmetric, else if both can send and receive, it is called symmetric.
+
+Messaging passing system can be classified based on the following criteria:
+
+Direct v/s indirect 
+Direct: P1 knows pid (process ID) of P2 and vice versa 
+
+Signals are sent b/w P2 and P1 because they know each other’s pid’s.
+
+Indirect: P1 and P2 do not know each other’s pid’s but they use a secondary medium to communicate i.e. either through ports, named pipes or mail boxes.
+
+2. Based on synchronous nature
+
+Blocking process: If a process P1 gets itself blocked/paused till it receives a signal from another process P2, P1 is called a blocking process otherwise, its a non-blocking process.
+
+3. Based on buffering
+
+Buffer: Space of memory to store some info. Communication is happening between P1 and P2. There must be some kind of buffer to store the info being sent by sender till the time receiver consumes the information.
+
+Buffer might also be required at the sender’s end. Sender will keep on storing info in its buffer till the time receiver is ready to receive the information.
+
+Classification based on buffering:
+
+Zero buffer:
+Neither P1 nor P2 have buffer. Then what happens if P2 wants to send some information but P1 is not ready to receive it?
+
+In this case, P1 and P2 both need to be of blocking nature.
+
+2. Bounded buffer: 
+
+P1 and P2 have some fixed buffer. If P2’s buffer is full, then P2 must wait for buffer to get empty before it can send more information to P1. Therefore, P2 must be of blocking nature. However if P2’s buffer is empty, P1 can or cannot wait for P2’s signal/info, it is under no obligation to wait. P1 can be blocking or non-blocking.
+
+3. Unbounded buffer:Buffer size is infinite: Sounds impossible, but since hard disk’s space is very large, we can theoretically call it infinity.Both sender or receiver can be blocking/non-blocking.
