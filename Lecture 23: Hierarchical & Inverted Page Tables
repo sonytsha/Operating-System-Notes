@@ -1,0 +1,51 @@
+Imagine we have a 32 bit computer, this means that the virtual address space for each of the process it allocates is 4 GB ( 2^32 bytes ).
+
+Suppose the page size is around 4 KB for the process. 4 KB = 2^12 bytes
+
+No. of pages the process can have = 2^32/ 2^12 = 2^20 pages
+
+Suppose, corresponding to each page of the process, the page table entry is of size 4 bytes. Then for storing the page table entries for all the pages, 2^20 * 4 bytes = 4 MB space will be required.
+
+And each process’ page table will take up 4 MB memory space. This is a waste of RAM space.
+
+Possible ways to reduce this wastage:
+
+Increase page size
+Increasing the page size will reduce the number of pages per process, and that will reduce the size of the page table entry for the process, which is directly proportional to the number of total pages
+.
+Issue with this technique: Results in increase of internal fragmentation
+
+Avoid page table entries for empty pages
+A process during its run won’t be using all its 2^20 pages ( and hence 4 GB of space ) simultaneously. A lot of the pages at any given point of time won’t be used. 
+But this is not a practical solution.
+
+Issue with this technique:
+1) If a process requests extra memory and uses a new page, a new page table entry will have to be created.
+2) How will a process know which pages are empty and can be used?
+
+3. Multi-level/tier page system
+
+
+
+
+
+Page directory is like the page table for the page table. Now say if pages 65-128 are empty, then we can now not have pages 65-128 in the page table and the indication of emptiness can be done in the page directory itself. That is,  no link from (65-128) to pages.
+
+Issue with this technique: We would increase the count of RAM accesses by 1. ( 3 levels of indirection/3 RAM accesses needed to access any variable )
+
+We can mitigate this problem to some extent by using TLB, but then TLB misses in this case are going to be very expensive.
+
+4. Inverted page table
+
+
+Rather than mapping being from page number to frame number, let us have mapping from frame number to page number
+
+Because of this, all those pages which are not in memory will not have any entry in the page table.
+
+Issue with this technique: If we want to access some variable, which is in the page 3 of PID 100, then we will have to do a linear access of the inverted page table to find the frame number for (pid: 100, page: 3).
+
+Iteration of a complete inverted page table will be costly.
+
+So, this technique saves space but at the expense of increased access time.
+
+A mixture of all the above ideas are implemented to actually reduce the page table size.
