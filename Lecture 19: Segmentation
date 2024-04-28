@@ -1,0 +1,52 @@
+To manage the wasted space between the heap and stack space of a process, a technique called segmentation is used.
+
+Rather than allocating one chunk of memory to a process, we segment out the different parts of memory and put them in different places in RAM. Each segment is identified by its own base and limit register.
+
+
+So, the code part, data part, heap part and stack part can reside in different parts of the RAM.
+
+
+
+
+The above technique solves the problem of gap between heap and stack.
+
+But this technique does not actually solve the second problem (i.e. when the memory required by the process is more than the RAM itself ).
+
+
+Allocating space in RAM
+
+Now post segmentation, suppose stack needs to expand. In that case, RAM will look for contiguous unused memory above/below stack memory and then add that memory to stack space.
+
+In the case the memory above and below is being used by some other process, we need to completely shift our stack space to some other place in RAM where it can expand to the new size.
+
+To enable searching for such available spaces in RAM, the OS maintains a linked list of free space in RAM.
+
+
+Algorithms for memory allocation:
+
+
+Now suppose we are demanding 1.5 MB from RAM ( could be because of stack expansion or new process segmentation ). There will be a few algorithms that take care of allocation of this demanded memory -
+
+First fit algorithm
+Find the first fit in the linked list that can be given to the demanding memory.
+
+TC: .O(N) in worst case
+
+But actually it will take much less than O(N) time for all practical purposes
+
+2. Best fit algorithm
+
+Find the smallest free space which is greater than demanded space and allocate that space to the demanding process. Using the best fit algorithm, only small pieces of memory remain left which are generally useless.
+T.C. O(N)
+
+3. Worst fit algorithm:
+
+Find the largest free space in the linked list and allocate it to the demanded memory.
+
+T.C. O(N)
+
+Issues with the above algorithms: Fragmentation
+Let’s assume that there is 6.3 MB of unallocated space in RAM, but these are scattered in different portions of the RAM in small portions of 0.1-0.2 MB. If a process now requests for a contiguous chunk of 3 MB, the OS will not be able to allocate the memory: as there is no contiguous chunk of 3 MB. This happens despite the fact that the total free memory is more than the requested memory. This is due to fragmentation.
+
+
+Fragmentation: Small portions of unallocated fragments in RAM - which are useless
