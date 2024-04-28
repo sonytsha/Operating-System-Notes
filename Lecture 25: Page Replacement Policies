@@ -1,0 +1,70 @@
+Compulsory faults vs capacity fault
+
+
+
+
+
+a) Compulsory faults: The faults which occur when all the frames in the RAM are not filled. For example, when we access page 7 for the first time, the frames in the RAM were empty. So page 7 had to be brought into the RAM from the hard disk. Such page faults cannot be avoided.
+b) Capacity faults( cold misses ): The page faults occurring when the RAM is full to its capacity are called capacity faults. The number of capacity faults depends on the page replacement policy ( PRP ).
+
+We can only try to reduce cold misses/faults. Compulsory faults can’t be avoided.
+
+Some page replacement policies:
+
+FIFO page replacement policy:
+
+
+
+     ( Yellow ones indicate the next page to be replaced, i.e. the first page to occupy the RAM, among the other pages in the RAM )
+In the above diagram, page 7 is the first page to be brought to the RAM. So,
+
+when the RAM gets filled up and a new page has to be put into the RAM ( when
+
+page 2 is requested in the above diagram ), page 7 has to be swapped out of the
+
+RAM. This is the FIFO principle: the first page to be in, must be the first page to
+
+go out in case the RAM is full and a new page has to be accommodated.
+
+
+ Cons of FIFO PRP:
+
+1. Not at all intelligent: It does not consider which pages are more used/less used, used most recently etc - this causes more misses.
+
+2. Belady’s anomaly: If we increase the capacity in RAM, ideally the number of misses should decrease. But interestingly, in FIFO PRP (Page replacement policy), increasing RAM capacity increases misses.
+
+For example, consider the following sequence of page requests:
+1, 2, 3, 4, 1, 2, 5, 1, 2, 3, 4, 5
+
+
+ With 3 frames in RAM  
+
+
+We can see that with 3 frames in RAM, the number of page faults ( every page request except the green ones ) is 9.
+
+ With 4 frames in RAM ( increased RAM capacity )
+
+
+
+ 
+
+We can see that with 4 frames in RAM, the number of page faults ( every page request except the green ones ) is 10. Thus increasing the RAM capacity can lead to more page faults. This is an example of Belady’s anomaly.
+
+ 
+
+ 
+
+Random replacement - Statistically, it performs better than FIFO
+Using history:
+
+
+Most frequently used:
+
+Idea: Replace most frequently used
+Limitation: MFU does not take into account the importance of spatial and temporal locality. Hence MFUs do not perform that well
+ Least frequently used:
+
+Idea: Replace least frequently used page
+Since it is based on spatial and temporal locality, it performs better than MFU PRP
+Limitation: We don’t take into consideration ‘when’. We are just making decisions based on frequency. If a variable was accessed very frequently, some time back, then probably we have actually moved away from that part of code which was accessing it and that page is not probably required.
+A better strategy would be to implement Least Recently Used policy
