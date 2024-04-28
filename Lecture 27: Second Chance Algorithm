@@ -1,0 +1,39 @@
+Idea: Hybrid algorithm of PRP that uses logic of FIFO and LRU approximation. We maintain a queue of all the pages currently in memory.
+
+
+Example operation:
+
+
+
+
+
+In the above diagram, 
+
+(A): FIFO is used to swap in 7 and swap out 2.
+
+(B): Reference bit of 0 made to 1
+
+(C): It was the chance of 0 to get out according to FIFO, but since the reference bit of 0 is 1, we give 0 a second chance. We give it a second chance by not removing it and then switching off its reference bit back to 0.
+
+
+If a page has a reference bit equal to 1, it will be given one safety.
+
+Possibile extensions:
+
+This second chance algorithm can be extended and rather than giving one chance, we can give 2 chances or more ( by using 2 bit references or more )
+
+If the page has a non-zero reference and it is its chance to get out, we give it another chance and reduce its reference by 1.
+
+
+Dirty bits
+
+If a page P is modified after being in RAM, if it gets replaced by some other page, the Hard Disk’s replica of the page should be updated, as the RAM’s version of the page P is the correct one and the one in Hard Disk is stale. So, the modified page needs to be copied to Hard Disk, otherwise the hard disk’s version of the page, if brought into RAM in future, would be incorrect.
+
+But if the page is NOT modified (written on) at any point from the time it was fetched to RAM, it does not need to be copied back to the Hard Disk when being swapped out, as it is essentially the same copy which was fetched from the hard disk and is unmodified.
+
+Dirty bits maintain the state of the page: if dirty bit is 0, it indicates that the page is unmodified, otherwise it is modified.
+This bit is maintained by the OS - whenever some process writes on the page, the dirty bit is set to 1.
+This dirty bit comes into consideration in second chance algorithm. Suppose a page P needs to be removed from RAM, then the page which has dirty bit 0 is more favorable for removal as compared to a page whose dirty bit is 1 ( as the unmodified page need not be copied back to HDD, which will save time.)
+
+
+Here, the reference bits for both P1 and P2 are 0, but the dirty bit of P1 is 0, whereas the dirty bit for P2 is 1. So, if the OS swaps out P2, it would need to copy P2’s data back to HDD< but it would be saved from this copying effort if it decides to swap out P1.
