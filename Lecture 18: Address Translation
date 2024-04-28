@@ -1,0 +1,34 @@
+Virtual address: The addressing understood and used by the process to refer to its variable.
+Physical address: The actual RAM address at which the variable is stored.
+
+
+This mapping from virtual address to actual address in RAM is called address translation.
+
+Physical address = Virtual address + Base address ( Starting point of process in physical address )
+
+Example:
+
+Assume process P1 has been allocated 16 KBs of memory.
+
+
+
+
+These 0Kb, 1KB, 2KB etc address milestones are virtual addresses actually which are in turn mapped to actual addresses in RAM.
+
+Suppose X is a variable with virtual address ( the addressing used by the process ) 2.1 KB.
+Let C be the starting address ( Base address ) of the process in the RAM
+When the process tries to access the variable X ( 2.1 KB ), this address is converted into physical address ( 2.1 KB + C ), before it is accessed.
+
+This base address C, is stored in a special register called base register. Every process has their own base register.
+
+Memory protection:
+
+Limit register: It stores the end point of the process’s address space.
+
+Whenever a process tries to access any variable, address translation will happen and will check whether the variable’s physical address is within the scope of base and limit register. If we try to access memory outside the scope of LR, it leads to a trap and causes the segmentation fault error.
+
+
+Two issues with the above memory management technique:
+
+Space between stack and heap is fixed but unutilized
+How to run processes that will take space greater than RAM size?
