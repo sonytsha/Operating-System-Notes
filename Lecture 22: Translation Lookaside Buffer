@@ -1,0 +1,97 @@
+The idea is to store the frame numbers of recently accessed pages in cache.
+
+For example, 3 -> 150. This key value pair would be stored in the TLB, indicating page 3 is stored in frame 150.
+
+The next time, page 3 is accessed, we don’t have to do a lookup in page table, We can do a faster lookup in cache for the same ( Access time of cache is much less than access time of RAM )
+
+New address translation with TLB in place:
+
+
+
+
+
+
+
+Note that in case of a TLB miss, along with looking up the page table to find the p-f value, we also need to cache this p-f value in the TLB cache, so that its available in the cache for future requests.
+
+
+Cache replacement policy:
+
+
+If TLB is full, then for storing a p-f in TLB, we remove an older (p-f) in TLB using “cache replacement policy”.
+
+
+One policy could be: LRU. ( Remove the least recently used )
+
+
+LRU in operation ( example scenario )
+
+Suppose TLB is as shown in the table:
+
+
+
+
+And suppose page 1,2,3 have been accessed till now. Now say page 4 is accessed and 4-109 is to be placed in TLB. The least recently used (p-f) in TLB is (2-105). So we replace it by (4-109).
+
+Limitation of LRU:
+
+Lets say that there are n slots in the TLB table. A hacker can create a process with (n+1) pages and then start accessing all those (n+1) pages sequentially in infinite loops:
+
+for ( i = 1 to infinity )
+for( k = 1 to n+ 1)
+
+  access page k
+
+Each time there will be a TLB miss and it will slow down the machine. So, in the worst case, TLB can make the address translation slower.
+
+To avoid this, rather than using LRU, we use a random replacement policy.
+
+Benefits of TLB:
+
+Spatial locality
+Suppose a process arr[1000] is part of some page: then for all arr[0], arr[1],... arr[999], once even if one of arr [0:999] is inserted into TLB (i.e. the process of arr[] ), then accessing arr[i]’s will be short and quick because every time we access arr[i] for different i, the p-f value is already there in the TLB.
+
+2. Temporal benefit:
+
+The idea is that if variable X is being accessed at any given time, there is a high chance it will be accessed again after some time.
+
+Stale values in TLB:
+
+
+TLB is a common cache accessed by each process.So now, if a context switch happens, issues might arise:
+
+Suppose a process (P1’s) page no. 3 is in TLB. Now suppose context switch happens and P2 is in charge and tries to access page no.3. It will end up getting the response of the previous process.
+
+To resolve it we can use either of the following techniques:
+
+Flush TLB on context switch
+We can use a valid bit in our TLB for each p-f value.
+
+
+
+Bit 1 denotes that all these page nos are of the current process.
+
+Now when the context switch happens, all valid bits are made 0 to ensure that all these page numbers are not part of the current process.
+
+ 
+
+3. We can use address space identifiers ( ASI ) - process Ids in TLB to identify which process the p-f value belongs to.
+
+
+
+Other uses of the page table
+
+Permission bit: We store this information for every page-table entry, i.e. for each page in table, we store whether the page is read only or is it read-write.
+
+Scenario where permission bit is useful:
+
+If a process’s page contains code(not data/variables) of the process, it need not be modified. So, it makes sense to make the page a read only page.
+
+Similarly, if a page contains the stack of the process, then it should be a read-write page.
+
+2. Shared bit: The shared bit helps in identifying read-only pages which are shared between processes .
+
+Scenario where shared bit is useful:
+
+
+Suppose 4 processes P1,P2,P3,P4 are accessing math.h library to get sqrt() function. Every process will have a separate page that would store the same code  of sqrt() function which is read only. In such a case, the 3 extra copies of the sqrt function() are consuming extra RAM space and are wasteful. Shared bit helps in sharing this page across the processes.
