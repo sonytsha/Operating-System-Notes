@@ -1,0 +1,40 @@
+Idea: If a running process is going to take more time to complete ( has more remaining time ) than a process in the queue, then the running process is preempted, and the other process with shorter time to completion is scheduled first.
+
+Example:
+
+
+At t = 0s, there is only P1 in the queue, so P1 is scheduled. 
+
+At t = 1s, P2 is in the queue, but P1 is already running, and will run for remaining 14 seconds.
+
+If we relax the constraint of no interruption, we can interrupt P1, and schedule process P2. This will drastically reduce the turn around time of P2 and the remaining process, P3 and P4.
+
+The shortest time to completion algorithm interrupts a process in favor of another process whose remaining time is less as compared to the currently running process.
+
+The schedule using the shortest remaining time first will look the following for the above scenario:
+
+
+Issues with shortest time to completion algorithm: Starvation
+
+Say P1 has run-time 1000 and it is followed by a continuous stream of small runtime processes. CPU won’t give run time to P1, since all small time processes are running. This causes starvation of P1. If small runtime processes keep on coming indefinitely, P1 will be starved indefinitely. There is no upper bound on the response time.
+
+
+Categories of scheduling algorithms
+
+Pre-emptive: Allowed to remove a running process in middle of its execution
+Non-preemptive: Algorithms in which a running process exits only after its completion, there is no pre-emption.
+From now on, we also remove the assumption that processes are using only CPU - there may be I/O (input output) requests by the processes. Since I/O typically takes multiple CPU cycles to complete, and during that time the process would not utilise CPU but just wait for the I/O to complete, we move out the process which are waiting on I/O.
+
+Note: Removal of process on account of I/O waiting is NOT considered preemption. A process will be moved out of CPU in case of wait for I/O irrespective of whether the algorithm is preemptive or not.
+
+I/O burst vs CPU burst
+
+If a process is working in CPU it is called a CPU burst. If a process is waiting in I/O, it is called an I/O burst.
+
+A process is a sequence of CPU bursts & I/O bursts. And each CPU burst can be considered as one sub process. No matter whether the algorithm is preemptive or non preemptive, we will be scheduling the CPU bursts and not the whole process.
+
+Interactive Processes:
+
+Processes that do a lot of I/O.
+
+Very frequent shift between CPU bursts and I/O bursts. Their CPU bursts ( and hence subprocesses ) have low runtime.
