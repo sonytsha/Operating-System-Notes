@@ -1,0 +1,18 @@
+Q - What is an operating system?
+
+A - Interface b/w hardware and software
+
+Examples - windows, linux, unix, mac OS
+
+Why learn operating systems?
+
+Understand how OS executes code
+Concepts of OS are asked in interview
+Learn bash/shell scripting
+Course outline:
+
+Functions of OS
+CPU virtualization
+Memory virtualization
+Concurrency
+Bugs related to concurrency 
