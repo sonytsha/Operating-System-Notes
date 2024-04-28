@@ -1,0 +1,45 @@
+Since resources are to be shared among several processes, access to resources by user processes should be restricted.
+On the other hand, OS should be given an unrestricted access to resources so that it can distribute it fairly and efficiently.
+
+This distinction of when to give restricted access and when to grant unrestricted access is made through process execution modes.
+
+
+There are two modes of process execution
+
+Kernel mode - Infinite access to resources ( Privileged modes )
+User mode - Restrictions
+The same process runs in user mode while carrying out its normal tasks and is elevated to kernel mode when it makes a system call. 
+
+
+
+
+Interrupt
+
+The elevation from user to kernel mode happens via a software interrupt. Every software interrupt has an Id with it. This ID points to a specific code that will run under that particular software interrupt.
+
+Interrupt vector: It is a table that specifies which code should be run for a given software interrupt ID.
+
+Kernel stack: When we enter kernel mode, a separate stack is used to store its relevant information called kernel stack. The user processes cannot access and thus cannot corrupt the kernel stack.
+
+Even though the software interrupt allows us to get into privileged mode, a malicious code can’t damage the OS’s crucial data structures in privileged mode or gain unrestricted access to resources.
+This is because of the fact that in the privileged mode, only pre-defined code( through the interrupt vector table ) is executed in the elevated mode and the malicious software does not have the freedom to run its own code in privileged mode.
+
+Traps/Exceptions/Faults
+
+When a process - in user mode - does something illegal, like trying to access a resource that is restricted ( for example, tries to read a memory address outside of its address space ), then it leads to traps/exceptions/faults - special type of software interrupts. What code the OS must execute to handle that particular illegal operation is determined by a trap table.
+
+The trap table is nothing but a table containing the code for each trap id.
+
+
+Handling hardware inputs ( inputs from peripheral devices )
+
+
+Two possible methods of handling hardware( e.g. keyboard/mouse ) inputs:
+
+Polling : Keep checking keyboard/mouse from time to time. If there is any new input. 
+Problem: High CPU wastage if number of input devices are high. The CPU will have to continuously keep checking the input even if there is no user input.
+
+2. Hardware interrupt : Keyboard/mouse sends signal to CPU when some input is gathered. The CPU, depending on the priority of the current process it is running, preempts the process and processes the input.
+
+
+Some interrupts are maskable, while other interrupts are non-maskable ( can be ignored by the CPU ). For each interrupt type, it is pre-defined whether it is maskable or non-maskable.
